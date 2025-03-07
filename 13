@@ -1,0 +1,107 @@
+class SymptomChecker:
+def __init__(self):
+self.symptoms = set()
+def add_symptom(self, symptom):
+self.symptoms.add(symptom)
+def diagnose(self):
+# Rule-based diagnosis
+
+if 'fever' in self.symptoms and 'cough' in
+
+self.symptoms:
+
+return "You may have a respiratory infection.
+Common treatments include rest and staying hydrated. If
+symptoms persist, consult a healthcare professional."
+elif 'headache' in self.symptoms and 'nausea' in
+
+self.symptoms:
+
+return "You might be experiencing migraines.
+Consider managing stress, maintaining a regular sleep
+schedule, and keeping a headache diary. Consult a doctor
+for further evaluation."
+
+elif 'chest pain' in self.symptoms and 'shortness
+
+of breath' in self.symptoms:
+
+return "You could be at risk of a heart-
+related issue. Seek immediate medical attention. Avoid
+
+strenuous activities and consult a cardiologist for
+further evaluation."
+
+elif 'abdominal pain' in self.symptoms and
+
+'vomiting' in self.symptoms:
+
+return "These symptoms may indicate a
+gastrointestinal problem. Avoid spicy and fatty foods,
+and stay hydrated. If symptoms persist, consult a
+gastroenterologist for proper diagnosis."
+
+elif 'joint pain' in self.symptoms and 'fatigue'
+
+in self.symptoms:
+
+return "These symptoms may be related to
+arthritis. Consider gentle exercises, hot/cold therapy,
+and over-the-counter pain relievers. Consult with a
+rheumatologist for evaluation."
+
+elif 'skin rash' in self.symptoms and 'itching'
+
+in self.symptoms:
+
+return "These symptoms may be indicative of
+an allergic reaction or skin condition. Avoid known
+allergens and use over-the-counter creams for relief.
+Consult a dermatologist for further evaluation."
+
+elif 'frequent urination' in self.symptoms and
+
+'thirst' in self.symptoms:
+
+return "You may have symptoms of diabetes.
+Monitor your blood sugar levels, maintain a healthy diet,
+and stay hydrated. Consult a healthcare professional for
+a blood sugar test and further guidance."
+
+elif 'confusion' in self.symptoms and 'memory
+
+loss' in self.symptoms:
+
+return "These symptoms could be signs of
+neurological issues. Ensure a healthy diet, exercise
+regularly, and get enough sleep. Consult a neurologist
+for further evaluation and advice."
+
+elif 'muscle weakness' in self.symptoms and
+
+'fatigue' in self.symptoms:
+
+return "Muscle weakness and fatigue may be
+related to various conditions, including autoimmune
+disorders. Get adequate rest, maintain a balanced diet,
+and consult a doctor for proper diagnosis and treatment."
+else:
+
+return "Not enough information for diagnosis.
+Please consult a healthcare professional for a thorough
+evaluation."
+# Example usage with extended rules and symptoms
+if __name__ == "__main__":
+expert_system = SymptomChecker()
+# Get user input for symptoms
+print("Enter symptoms one by one (press Enter after
+each symptom). Type 'done' when finished.")
+while True:
+symptom = input("Symptom: ").lower()
+if symptom == 'done':
+break
+expert_system.add_symptom(symptom)
+# Get diagnosis
+result = expert_system.diagnose()
+# Display the result
+print(result)
