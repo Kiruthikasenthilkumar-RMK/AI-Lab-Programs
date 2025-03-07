@@ -1,0 +1,35 @@
+Install in cmd:
+pip install python-constraint
+
+cons.py
+from constraint import Problem, AllDifferentConstraint
+def constraint_function(variables, domains, assignments):
+# Define your constraints here
+# Example: variables[0] + variables[1] == variables[2]
+return True
+
+def main():
+# Create a problem instance
+problem = Problem()
+
+# Add variables to the problem
+problem.addVariable('a', range(1, 5))
+problem.addVariable('b', range(2, 4))
+problem.addVariable('c', range(1, 3))
+
+# Add a constraint function to the problem
+
+problem.addConstraint(constraint_function, ['a', 'b', 'c'])
+
+# Optionally, add an "All Different" constraint
+problem.addConstraint(AllDifferentConstraint(), ['a', 'b', 'c'])
+
+# Solve the problem
+solutions = problem.getSolutions()
+
+# Print the solutions
+for solution in solutions:
+print(solution)
+
+if __name__ == "__main__":
+main()
