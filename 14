@@ -1,0 +1,47 @@
+Run in cmd:
+pip install numpy pandas scikit-learn
+Iris_classify.py
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score,
+classification_report
+from sklearn.datasets import load_iris
+# Load and explore data
+iris = load_iris()
+data = pd.DataFrame(data=np.c_[iris['data'],
+iris['target']], columns=iris['feature_names'] +
+['target'])
+print("Data Preview:")
+
+print(data.head())
+# Prepare data
+X = data.drop('target', axis=1)
+y = data['target']
+# Accept input for test size and random state
+test_size = float(input("Enter the test size (e.g., 0.2
+for 20% test size): "))
+random_state = int(input("Enter the random state: "))
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+test_size=test_size, random_state=random_state)
+# Standardize features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+# Train the k-NN classifier
+knn_classifier = KNeighborsClassifier(n_neighbors=3)
+knn_classifier.fit(X_train_scaled, y_train)
+# Make predictions
+y_pred = knn_classifier.predict(X_test_scaled)
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+classification_rep = classification_report(y_test,
+y_pred, target_names=iris['target_names'])
+# Display results
+print("\nModel Evaluation:")
+print(f"Accuracy: {accuracy:.2f}")
+print("\nClassification Report:")
+print(classification_rep)
