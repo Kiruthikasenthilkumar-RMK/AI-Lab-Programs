@@ -1,0 +1,68 @@
+class Unifier:
+def __init__(self):
+self.substitution = {}
+
+def unify(self, term1, term2):
+self.substitution = {}
+if self.unify_terms(term1, term2):
+print("Unification successful. Substitution:")
+self.display_substitution()
+else:
+print("Unification failed.")
+
+def unify_terms(self, term1, term2):
+if term1 == term2:
+return True
+elif self.is_variable(term1):
+return self.unify_variable(term1, term2)
+elif self.is_variable(term2):
+return self.unify_variable(term2, term1)
+elif isinstance(term1, list) and isinstance(term2, list):
+
+return self.unify_lists(term1, term2)
+elif isinstance(term1, tuple) and isinstance(term2, tuple):
+return self.unify_tuples(term1, term2)
+else:
+return False
+
+def unify_variable(self, variable, term):
+if variable in self.substitution:
+return self.unify_terms(self.substitution[variable],
+term)
+elif term in self.substitution:
+return self.unify_terms(variable,
+self.substitution[term])
+else:
+self.substitution[variable] = term
+return True
+
+def unify_lists(self, list1, list2):
+if len(list1) != len(list2):
+return False
+for t1, t2 in zip(list1, list2):
+if not self.unify_terms(t1, t2):
+return False
+return True
+
+def unify_tuples(self, tuple1, tuple2):
+if len(tuple1) != len(tuple2):
+return False
+for t1, t2 in zip(tuple1, tuple2):
+if not self.unify_terms(t1, t2):
+return False
+return True
+
+def is_variable(self, term):
+return isinstance(term, str) and term.islower()
+
+def display_substitution(self):
+for variable, value in self.substitution.items():
+print(f"{variable} = {value}")
+
+# Example usage:
+if __name__ == "__main__":
+unifier = Unifier()
+
+term1 = ['f', 'X', 'Y']
+term2 = ['f', 'a', 'b']
+unifier.unify(term1, term2)
