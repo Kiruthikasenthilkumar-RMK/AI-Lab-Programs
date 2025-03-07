@@ -1,0 +1,93 @@
+class Action:
+def __init__(self, name, preconditions, effects):
+self.name = name
+self.preconditions = preconditions
+self.effects = effects
+
+def __str__(self):
+return self.name
+
+class State:
+def __init__(self, robot_location, destination_reached):
+self.robot_location = robot_location
+self.destination_reached = destination_reached
+
+def __str__(self):
+return f"Robot Location: {self.robot_location}, Destination
+Reached: {self.destination_reached}"
+
+class Problem:
+def __init__(self, initial_state, goal_state, actions):
+self.initial_state = initial_state
+self.goal_state = goal_state
+self.actions = actions
+
+def classical_planning(problem):
+plan = []
+current_state = problem.initial_state
+
+while not current_state.destination_reached:
+applicable_actions = [action for action in problem.actions
+if action.preconditions(current_state)]
+
+if not applicable_actions:
+print("No plan found.")
+return None
+
+chosen_action = applicable_actions[0]
+plan.append(chosen_action)
+current_state = chosen_action.effects(current_state)
+
+return plan
+
+# Define actions
+def move_action(preconditions, effects):
+def action(state):
+if preconditions(state):
+return effects(state)
+
+else:
+return state
+
+return action
+
+# Define initial and goal states
+initial_state = State(robot_location='RoomA',
+destination_reached=False)
+goal_state = State(robot_location='RoomC', destination_reached=True)
+
+# Define actions
+move_to_room_b = Action(
+name='MoveToRoomB',
+preconditions=lambda state: state.robot_location == 'RoomA',
+effects=move_action(
+preconditions=lambda state: state.robot_location == 'RoomA',
+effects=lambda state: State(robot_location='RoomB',
+destination_reached=False)
+)
+)
+
+move_to_room_c = Action(
+name='MoveToRoomC',
+preconditions=lambda state: state.robot_location == 'RoomB',
+effects=move_action(
+preconditions=lambda state: state.robot_location == 'RoomB',
+effects=lambda state: State(robot_location='RoomC',
+destination_reached=True)
+)
+)
+
+# Define the planning problem
+problem = Problem(initial_state, goal_state,
+actions=[move_to_room_b, move_to_room_c])
+
+# Run classical planning algorithm
+result_plan = classical_planning(problem)
+
+# Print the resulting plan
+if result_plan:
+print("Plan:")
+for action in result_plan:
+print(action)
+
+Output:
